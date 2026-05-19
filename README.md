@@ -6,7 +6,7 @@ A modular PPO implementation on CartPole, built as a foundation toward RLHF-styl
 
 This repository contains a modular implementation of Proximal Policy Optimization (PPO) trained on CartPole-v1.
 
-The goal of this project is not only to solve CartPole, but also to build a clean and extensible reinforcement learning codebase that can later evolve toward RLHF-style training pipelines for large language models.
+
 
 Instead of relying on existing RL libraries, the PPO algorithm is implemented from scratch, including:
 
@@ -18,7 +18,121 @@ Instead of relying on existing RL libraries, the PPO algorithm is implemented fr
 - minibatch PPO updates
 - experiment logging and visualization
 
-## PPO Overview
+### Current Goal
+The goal of this project is not only to solve CartPole, but also to build a clean and extensible reinforcement learning codebase that can later evolve toward RLHF-style training pipelines for large language models.
+
+### Current Status
+
+Current progress:
+
+- PPO + CartPole fully implemented and modularized
+- experiment management and visualization completed
+- GitHub-ready project structure established
+
+### Next step:
+
+- continue extending the repo toward RLHF-style PPO and small language-model experiments
+
+## Quick Start
+
+### Create environment
+
+```bash
+conda create -n rltoy python=3.10 -y
+conda activate rltoy
+```
+### Install Pytorch (CUDA)
+```bash
+pip install torch torchvision torchaudio \
+    --index-url https://download.pytorch.org/whl/cu124
+```
+### Install dependencies
+```bash
+pip install -r requirements.txt
+```
+### Run PPO training
+```bash
+bash scripts/run_ppo_cartpole.sh
+```
+Each run automatically creates an isolated experiment directory under:
+```
+tmp/
+```
+including:
+```
+config.yaml
+metadata.json
+history.json
+training_curves.png
+```
+
+## Project structure
+```
+rl_toy/
+├── configs/              # Experiment configurations
+├── scripts/              # Run scripts
+├── src/
+│   ├── algorithms/       # PPO-related functions
+│   ├── buffers/          # Rollout buffer
+│   ├── envs/             # Environment creation
+│   ├── networks/         # Policy / value networks
+│   ├── trainers/         # PPO training loop
+│   ├── utils/            # Plotting / seed / logging
+│   └── run_ppo_cartpole.py
+├── results/              # Selected experiment outputs
+├── notes/                # Analysis and learning notes
+└── README.md
+```
+## Example Training Curves
+
+The training process logs:
+- episodic reward
+- actor loss
+- critic loss
+- entropy
+- approximate KL divergence
+- clip fraction
+
+![training_curves](results/ppo_cartpole/main_run/training_curves.png)
+
+## Notes
+Detailed analysis and learning notes are stored under:
+```
+notes/
+```
+including topics such as:
+
+- PPO vs REINFORCE
+- GAE intuition
+- PPO clipping mechanism
+- training curve analysis
+- RLHF connections
+- future extension plans
+
+These notes are intended to document the reasoning process behind the implementation, rather than only presenting runnable code.
+
+## From CartPole PPO to RLHF
+
+This repository can also be viewed as a toy prototype of RLHF-style PPO training.
+
+CartPole PPO:
+
+state -> action -> environment reward
+
+RLHF PPO:
+
+prompt -> generated response -> reward model score
+
+Both systems rely on:
+
+- old log probabilities
+- advantage estimation
+- policy ratio computation
+- clipped policy updates
+- value function learning
+- entropy regularization
+
+<!-- ## PPO Overview
 
 PPO (Proximal Policy Optimization) is an on-policy reinforcement learning algorithm that improves policy stability by constraining overly large updates.
 
@@ -130,4 +244,4 @@ pip install torch torchvision torchaudio \
 
 ## Install other dependencies
 
-pip install -r requirements.txt
+pip install -r requirements.txt -->
