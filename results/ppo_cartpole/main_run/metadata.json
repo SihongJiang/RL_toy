@@ -1,0 +1,8 @@
+{
+  "env_name": "CartPole-v1",
+  "seed": 0,
+  "device": "cuda",
+  "state_dim": 4,
+  "action_dim": 2,
+  "output_dir": "/home/zhangsihong/Projects/rl_toy/tmp/ppo_cartpole_20260519_150820"
+}

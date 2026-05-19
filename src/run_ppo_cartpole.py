@@ -1,25 +1,19 @@
-import numpy as np
-import torch
-import torch.nn as nn
-import torch.optim as optim
 import os
+import json
+import shutil
 from datetime import datetime
-from torch.distributions import Categorical
+
+import yaml
+import torch
+import torch.optim as optim
 
 from utils.seed import set_seed
 from envs.make_env import make_env
 from utils.plot import plot_training_curves
 from networks.mlp import PolicyNetwork, ValueNetwork
-from buffers.rollout_buffer import RolloutBuffer
-from algorithms.ppo import (
-    collect_rollout,
-    get_value,
-    compute_gae,
-    evaluate_actions,
-)
 from trainers.train_ppo import train_ppo
 import yaml
-
+import json
 import shutil
 
 PROJECT_ROOT = "/home/zhangsihong/Projects/rl_toy"
@@ -88,18 +82,18 @@ history = train_ppo(
 
 metadata = {
     "env_name": config["env"]["name"],
-    "seed": config["seed"],
+    "seed": int(config["seed"]),
     "device": str(device),
-    "state_dim": state_dim,
-    "action_dim": action_dim,
-    "output_dir": output_dir,
+    "state_dim": int(state_dim),
+    "action_dim": int(action_dim),
+    "output_dir": str(output_dir),
 }
 metadata_path = os.path.join(output_dir, "metadata.json")
 with open(metadata_path, "w") as f:
     json.dump(metadata, f, indent=2)
 print(f"[INFO] Metadata saved to: {metadata_path}")
 
-import json
+
 history_path = os.path.join(output_dir, "history.json")
 with open(history_path, "w") as f:
     json.dump(
