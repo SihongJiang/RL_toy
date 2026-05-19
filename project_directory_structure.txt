@@ -1,0 +1,34 @@
+rl_toy/
+├── README.md
+├── requirements.txt
+├── scripts/
+│   ├── run_ppo_cartpole.sh
+│   └── plot_ppo_cartpole.sh
+├── configs/
+│   └── ppo_cartpole.yaml
+├── src/
+│   ├── envs/
+│   │   └── make_env.py
+│   ├── algorithms/
+│   │   ├── reinforce.py
+│   │   ├── actor_critic.py
+│   │   └── ppo.py
+│   ├── networks/
+│   │   └── mlp.py
+│   ├── buffers/
+│   │   └── rollout_buffer.py
+│   ├── trainers/
+│   │   └── train_ppo.py
+│   ├── utils/
+│   │   ├── seed.py
+│   │   ├── logger.py
+│   │   └── plot.py
+│   └── main.py
+├── results/
+│   └── ppo_cartpole/
+│       ├── logs/
+│       ├── figures/
+│       └── checkpoints/
+└── notes/
+    ├── ppo_cartpole_analysis.md
+    └── rlhf_extension_plan.md
