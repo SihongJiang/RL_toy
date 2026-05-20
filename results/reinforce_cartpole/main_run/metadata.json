@@ -1,0 +1,9 @@
+{
+  "algorithm": "REINFORCE",
+  "env_name": "CartPole-v1",
+  "seed": 0,
+  "device": "cuda",
+  "state_dim": 4,
+  "action_dim": 2,
+  "output_dir": "/home/zhangsihong/Projects/rl_toy/tmp/reinforce_cartpole_20260520_115833"
+}

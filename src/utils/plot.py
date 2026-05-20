@@ -57,3 +57,67 @@ def plot_training_curves(history, output_dir, filename="training_curves.png"):
 
     print(f"[INFO] Figure saved to: {save_path}")
     return save_path
+
+
+def plot_reinforce_training_curves(
+    history,
+    output_dir,
+    filename="reinforce_training_curves.png"
+):
+    import os
+    import matplotlib.pyplot as plt
+
+    rewards_history = history["rewards_history"]
+    rolling_reward_mean_history = history["rolling_reward_mean_history"]
+    rolling_return_variance = history["rolling_return_variance"]
+    raw_returns_variance_history = history["raw_returns_variance_history"]
+    policy_loss_variance_history = history["policy_loss_variance_history"]
+    gradient_norm_history = history["gradient_norm_history"]
+
+    fig, axes = plt.subplots(3, 2, figsize=(14, 12))
+
+    axes[0, 0].plot(rewards_history)
+    axes[0, 0].set_title("Episode Reward")
+    axes[0, 0].set_xlabel("Episode")
+    axes[0, 0].set_ylabel("Reward")
+    axes[0, 0].grid(True)
+
+    axes[0, 1].plot(rolling_reward_mean_history)
+    axes[0, 1].set_title("Rolling Mean Reward (window=50)")
+    axes[0, 1].set_xlabel("Episode")
+    axes[0, 1].set_ylabel("Mean Reward")
+    axes[0, 1].grid(True)
+
+    axes[1, 0].plot(rolling_return_variance)
+    axes[1, 0].set_title("Rolling Reward Variance (window=50)")
+    axes[1, 0].set_xlabel("Episode")
+    axes[1, 0].set_ylabel("Variance")
+    axes[1, 0].grid(True)
+
+    axes[1, 1].plot(raw_returns_variance_history)
+    axes[1, 1].set_title("Monte Carlo Return Variance")
+    axes[1, 1].set_xlabel("Episode")
+    axes[1, 1].set_ylabel("Variance")
+    axes[1, 1].grid(True)
+
+    axes[2, 0].plot(policy_loss_variance_history)
+    axes[2, 0].set_title("Policy Loss Variance")
+    axes[2, 0].set_xlabel("Episode")
+    axes[2, 0].set_ylabel("Variance")
+    axes[2, 0].grid(True)
+
+    axes[2, 1].plot(gradient_norm_history)
+    axes[2, 1].set_title("Gradient Norm")
+    axes[2, 1].set_xlabel("Episode")
+    axes[2, 1].set_ylabel("L2 Norm")
+    axes[2, 1].grid(True)
+
+    plt.tight_layout()
+
+    save_path = os.path.join(output_dir, filename)
+    plt.savefig(save_path, dpi=300, bbox_inches="tight")
+    plt.close()
+
+    print(f"[INFO] REINFORCE figure saved to: {save_path}")
+
+    return save_path
